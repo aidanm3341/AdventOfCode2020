@@ -27,8 +27,8 @@ public class Day2 {
 
         char target = s.charAt(s.indexOf(":")-1);
 
-        s = s.substring(s.indexOf(":")+2);
-        return s.charAt(lindex-1) == target ^ s.charAt(uindex-1) == target;
+        String password = s.substring(s.indexOf(":")+2);
+        return password.charAt(lindex-1) == target ^ password.charAt(uindex-1) == target;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
