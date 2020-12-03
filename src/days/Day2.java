@@ -32,7 +32,7 @@ public class Day2 {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        Stream<String> inputs = new InputReader().readLines("2.txt");
+        Stream<String> inputs = new InputReader().readAsStream("2.txt");
         System.out.println(new Day2().numberOfValidPasswords(inputs));
     }
 }

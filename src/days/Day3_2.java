@@ -4,11 +4,10 @@ import utils.InputReader;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day3_2 {
     public static void main(String[] args) throws FileNotFoundException {
-        Map map = new Map(new InputReader().readLines("3.txt").collect(Collectors.toList()));
+        Map map = new Map(new InputReader().readAsList("3.txt"));
 
         System.out.println(
                 calcTreeCountForSlope(map, 1, 1) *
@@ -19,7 +18,7 @@ public class Day3_2 {
         );
     }
 
-    public static long calcTreeCountForSlope(Map map, int p, int q){
+    private static long calcTreeCountForSlope(Map map, int p, int q){
         map.reset();
         int treeCount = 0;
         for(int i=0; i<map.getHeight(); i++){
@@ -31,7 +30,7 @@ public class Day3_2 {
         return treeCount;
     }
 
-    static class Map{
+    private static class Map{
         private int x, y;
         private final List<String> map;
 

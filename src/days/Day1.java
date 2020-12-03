@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class Day1 {
     public static void main(String[] args) throws FileNotFoundException {
-        Stream<String> input = new InputReader().readLines("1.txt");
+        Stream<String> input = new InputReader().readAsStream("1.txt");
         List<Integer> ints = input.map(Integer::parseInt).collect(Collectors.toList());
 
         for (int i : ints)

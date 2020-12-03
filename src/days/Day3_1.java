@@ -4,11 +4,10 @@ import utils.InputReader;
 
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day3_1 {
     public static void main(String[] args) throws FileNotFoundException {
-        Map map = new Map(new InputReader().readLines("3.txt").collect(Collectors.toList()));
+        Map map = new Map(new InputReader().readAsList("3.txt"));
 
         int treeCount = 0;
         for(int i=0; i<map.getHeight(); i++){
@@ -20,7 +19,7 @@ public class Day3_1 {
         System.out.println(treeCount);
     }
 
-    static class Map{
+    private static class Map{
         private int x, y;
         private final List<String> map;
 
