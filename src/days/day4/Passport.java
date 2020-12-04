@@ -3,7 +3,7 @@ package days.day4;
 import java.util.Set;
 
 public class Passport implements PassportCandidate{
-    private String byr, iyr, eyr, hgt, hcl, ecl, pid;
+    private final String byr, iyr, eyr, hgt, hcl, ecl, pid;
 
     public Passport(String byr, String iyr, String eyr, String hgt, String hcl, String ecl, String pid) {
         this.byr = byr;
@@ -15,6 +15,7 @@ public class Passport implements PassportCandidate{
         this.pid = pid;
     }
 
+    @Override
     public boolean isValidPassport(){
         return isBirthYearValid() &&
                 isIssueYearValid() &&
@@ -26,21 +27,21 @@ public class Passport implements PassportCandidate{
     }
 
     private boolean isBirthYearValid(){
-        if(byr.length() != 4) return false;
-        int val = Integer.parseInt(byr);
-        return val >= 1920 && val <= 2002;
+        return isYearBetweenInclusive(byr,1920, 2002);
     }
 
     private boolean isIssueYearValid(){
-        if(iyr.length() != 4) return false;
-        int val = Integer.parseInt(iyr);
-        return val >= 2010 && val <= 2020;
+        return isYearBetweenInclusive(iyr,2010, 2020);
     }
 
     private boolean isExpirationYearValid(){
-        if(eyr.length() != 4) return false;
-        int val = Integer.parseInt(eyr);
-        return val >= 2020 && val <= 2030;
+        return isYearBetweenInclusive(eyr,2020, 2030);
+    }
+
+    private boolean isYearBetweenInclusive(String year, int begin, int end){
+        if(year.length() != 4) return false;
+        int val = Integer.parseInt(year);
+        return val >= begin && val <= end;
     }
 
     private boolean isHeightValid(){
