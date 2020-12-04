@@ -1,4 +1,4 @@
-package days;
+package days.day4;
 
 import utils.InputReader;
 
@@ -9,13 +9,27 @@ import java.util.stream.Stream;
 
 public class Day4_2 {
 
-    private static Map<String, String> parsePassport(Stream<String> p){
+    private static PassportCandidate parsePassport(Stream<String> p){
+        Set<String> requiredFields = Set.of("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid");
+
         Map<String, String> output = new HashMap<>();
         p.forEach(s -> {
             for (String pair : s.split(" "))
                 output.put(pair.substring(0, 3), pair.substring(4));
         });
-        return output;
+
+        PassportCandidate pc;
+        if(output.keySet().containsAll(requiredFields))
+            pc = new Passport(output.get("byr"),
+                    output.get("iyr"),
+                    output.get("eyr"),
+                    output.get("hgt"),
+                    output.get("hcl"),
+                    output.get("ecl"),
+                    output.get("pid"));
+        else
+            pc = new InvalidPassport();
+        return pc;
     }
 
     public static boolean isValidPassport(Map<String, String> passport){
@@ -86,12 +100,12 @@ public class Day4_2 {
                 lines.add(line);
             }
             else{
-                if(isValidPassport(parsePassport(lines.stream())))
+                if(parsePassport(lines.stream()).isValidPassport())
                     numberOfValidPassports++;
                 lines.clear();
             }
         }
-        if(isValidPassport(parsePassport(lines.stream())))
+        if(parsePassport(lines.stream()).isValidPassport())
             numberOfValidPassports++;
         System.out.println(numberOfValidPassports);
     }

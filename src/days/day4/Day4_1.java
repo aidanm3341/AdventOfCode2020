@@ -1,4 +1,4 @@
-package days;
+package days.day4;
 
 import utils.InputReader;
 
