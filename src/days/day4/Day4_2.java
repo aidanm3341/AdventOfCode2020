@@ -30,26 +30,28 @@ public class Day4_2 {
             return new InvalidPassport();
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Stream<String> inputs = new InputReader().readAsStream("4.txt");
-
-        int numberOfValidPassports = 0;
+    private static List<String> formatOnePassportPerLine(Stream<String> inputs){
         List<String> lines = new ArrayList<>();
+        StringBuilder passportLine = new StringBuilder();
         for(String line : inputs.collect(Collectors.toList())) {
             if(!line.equals(""))
-                lines.add(line);
+                passportLine.append(line).append(" ");
             else{
-                String passportLine = lines.stream().map(s -> s + " ").collect(Collectors.joining());
-                if(parsePassport(passportLine).isValidPassport())
-                    numberOfValidPassports++;
-                lines.clear();
+                lines.add(passportLine.toString());
+                passportLine.setLength(0); // clearing the string builder without new keyword.
             }
         }
+        lines.add(passportLine.toString()); // catch the last line.
+        return lines;
+    }
 
-        String passportLine = lines.stream().map(s -> s + " ").collect(Collectors.joining());
-        if(parsePassport(passportLine).isValidPassport())
-            numberOfValidPassports++;
-
-        System.out.println(numberOfValidPassports);
+    public static void main(String[] args) throws FileNotFoundException {
+        System.out.println(
+                formatOnePassportPerLine(
+                        new InputReader().readAsStream("4.txt")
+                ).stream()
+                .filter(p -> parsePassport(p).isValidPassport())
+                .count()
+        );
     }
 }
