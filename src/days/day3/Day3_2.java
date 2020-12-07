@@ -1,22 +1,33 @@
-package days;
+package days.day3;
 
 import utils.InputReader;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public class Day3_1 {
+public class Day3_2 {
     public static void main(String[] args) throws FileNotFoundException {
         Map map = new Map(new InputReader().readAsList("3.txt"));
 
+        System.out.println(
+                calcTreeCountForSlope(map, 1, 1) *
+                calcTreeCountForSlope(map, 3, 1) *
+                calcTreeCountForSlope(map, 5, 1) *
+                calcTreeCountForSlope(map, 7, 1) *
+                calcTreeCountForSlope(map, 1, 2)
+        );
+    }
+
+    private static long calcTreeCountForSlope(Map map, int p, int q){
+        map.reset();
         int treeCount = 0;
         for(int i=0; i<map.getHeight(); i++){
-                map.goRight(3);
-                map.goDown(1);
-                if(map.isTreeAtCurrentPos())
-                    treeCount++;
+            map.goRight(p);
+            map.goDown(q);
+            if(map.isTreeAtCurrentPos())
+                treeCount++;
         }
-        System.out.println(treeCount);
+        return treeCount;
     }
 
     private static class Map{
@@ -25,8 +36,7 @@ public class Day3_1 {
 
         public Map(List<String> map){
             this.map = map;
-            x = 0;
-            y = 0;
+            reset();
         }
 
         public void goRight(int i){
@@ -48,6 +58,11 @@ public class Day3_1 {
 
         public int getHeight(){
             return map.size();
+        }
+
+        public void reset(){
+            x = 0;
+            y = 0;
         }
     }
 }
