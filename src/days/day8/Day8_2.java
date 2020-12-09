@@ -16,24 +16,25 @@ public class Day8_2 {
                         false)));
 
 
-        for(Instruction i : instructions){
-            if(i.op.equals("nop")){
-                i.op = "jmp";
+        for(int i=0; i<instructions.size(); i++){//Instruction i : instructions){
+            System.out.println(i);
+            if(instructions.get(i).op.equals("nop")){
+                instructions.get(i).op = "jmp";
                 Pair<Boolean, Integer> terminates = doesTerminate(instructions);
                 if(terminates.getFst()){
                     System.out.println(terminates.getSnd());
                     break;
                 }
-                i.op = "nop";
+                instructions.get(i).op = "nop";
             }
-            else if(i.op.equals("jmp")){
-                i.op = "nop";
+            else if(instructions.get(i).op.equals("jmp")){
+                instructions.get(i).op = "nop";
                 Pair<Boolean, Integer> terminates = doesTerminate(instructions);
                 if(terminates.getFst()){
                     System.out.println(terminates.getSnd());
                     break;
                 }
-                i.op = "jmp";
+                instructions.get(i).op = "jmp";
             }
         }
     }
@@ -46,10 +47,15 @@ public class Day8_2 {
         int acc = 0;
         int ip = 0; // instruction pointer
 
+        Instruction currentInstruction;
         while(true){
-            Instruction currentInstruction = instructions.get(ip);
-            if(currentInstruction.isExecuted)
+            if(ip >= instructions.size()-1)
+                return new Pair<>(true, acc);
+
+            currentInstruction = instructions.get(ip);
+            if(currentInstruction.isExecuted) {
                 break;
+            }
             switch (currentInstruction.op){
                 case "acc":
                     acc += currentInstruction.val;
@@ -65,11 +71,7 @@ public class Day8_2 {
             currentInstruction.isExecuted = true;
         }
 
-        System.out.println("ip: " + ip + "   acc: " + acc);
-        if(ip >= instructions.size()-1)
-            return new Pair<>(true, acc);
-        else
-            return new Pair<>(false, acc);
+        return new Pair<>(false, acc);
     }
 
     private static class Instruction{
